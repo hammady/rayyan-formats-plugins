@@ -31,4 +31,8 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency 'rake', '~> 0'
+
+  spec.add_dependency 'rayyan-formats-core', "~> 0.0.1"
+  spec.add_dependency 'bibtex-ruby', "~> 4.4"
+  spec.add_dependency 'ref_parsers', "~> 0.0.1"
 end
