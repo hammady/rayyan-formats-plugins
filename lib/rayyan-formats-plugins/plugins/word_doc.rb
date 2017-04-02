@@ -1,6 +1,6 @@
 module RayyanFormats
   module Plugins
-    class WordDocument < RayyanFormats::Base
+    class WordDocument < Base
       
       title 'Word Document'
       extension 'docx'

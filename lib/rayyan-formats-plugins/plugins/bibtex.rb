@@ -2,7 +2,7 @@
 # http://www.cs.arizona.edu/~collberg/Teaching/07.231/BibTeX/bibtex.html
 module RayyanFormats
   module Plugins
-    class BibTeX < RayyanFormats::Base
+    class BibTeX < Base
       
       title 'BibTeX'
       extension 'bib'

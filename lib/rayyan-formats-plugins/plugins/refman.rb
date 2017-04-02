@@ -1,6 +1,6 @@
 module RayyanFormats
   module Plugins
-    class Refman < RayyanFormats::Base
+    class Refman < Base
       
       title 'RefMan'
       extension 'ris'

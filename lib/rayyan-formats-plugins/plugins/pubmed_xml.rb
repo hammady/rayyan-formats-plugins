@@ -1,6 +1,6 @@
 module RayyanFormats
   module Plugins
-    class PubmedXML < RayyanFormats::Base
+    class PubmedXML < Base
       
       title 'PubMed XML'
       extension 'xml'

@@ -2,7 +2,7 @@ require 'zlib'
 
 module RayyanFormats
   module Plugins
-    class GZ < RayyanFormats::Base
+    class GZ < Base
       
       title 'GZ'
       extension 'gz'

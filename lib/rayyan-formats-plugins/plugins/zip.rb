@@ -1,6 +1,6 @@
 module RayyanFormats
   module Plugins
-    class Zip < RayyanFormats::Base
+    class Zip < Base
       
       title 'ZIP'
       extension 'zip'

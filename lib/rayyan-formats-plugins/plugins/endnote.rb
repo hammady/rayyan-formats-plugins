@@ -1,6 +1,6 @@
 module RayyanFormats
   module Plugins
-    class EndNote < RayyanFormats::Base
+    class EndNote < Base
       
       title 'EndNote'
       extension 'enw'
