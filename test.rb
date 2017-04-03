@@ -9,7 +9,6 @@ require 'log4r'
 
 RayyanFormats::Base.formats = [
   RayyanFormats::Plugins::Refman,
-  # RayyanFormats::Plugins::PubmedXML,
   RayyanFormats::Plugins::EndNote,
   RayyanFormats::Plugins::BibTeX,
   RayyanFormats::Plugins::WordDocument,
