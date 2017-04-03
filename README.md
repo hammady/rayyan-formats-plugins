@@ -1,6 +1,6 @@
 # RayyanFormats Plugins
 
-Rayyan plugins for import/export of reference file formats. More formats can be supported and enabled via the initializer. 
+Plugins for RayyanFormats. For details, please check the core plugin [rayyan-formats-core](https://github.com/rayyanqcri/rayyan-formats-core).
 
 ## Installation
 
@@ -18,15 +18,63 @@ Or install it yourself as:
 
 ## Usage
 
-    TODO
+To configure your client application to use some or all of the format plugins here, call the `formats` method. Typically, in Rails, this is done in an initializer:
+
+    # config/initializers/rayyan-formats.rb
+    RayyanFormats::Base.formats = [
+      RayyanFormats::Plugins::Refman,
+      RayyanFormats::Plugins::EndNote,
+      RayyanFormats::Plugins::BibTeX,
+      RayyanFormats::Plugins::WordDocument,
+      RayyanFormats::Plugins::GZ,
+      RayyanFormats::Plugins::Zip
+    ]
+
+The rest is done exactly the same as what is explained in the core plugin.
 
 ## Testing
 
-    TODO
+Currently, there is no test suite for this gem. However, test calls can be found in `test.rb`. Just clone this repo then run it to get example usage and test all the parts manually.
+
+    ./test.rb
 
 ## Adding more formats
 
-    TODO
+Support for more formats can be done by subclassing `RayyanFormats::Base` and defining attributes and logic using simple DSL:
+
+    module RayyanFormats
+      module Plugins
+        class YourNewFormat < RayyanFormats::Base
+
+          title 'Format friendly name'
+          extension 'extension here, e.g. xyz'
+          description 'Description for the format'
+
+          detect do |first_line, lines|
+            if seems_ok_logic(first_line)
+                next true
+            else
+                next false
+            end
+          end
+
+          do_import do |body, filename, &block|
+              resulting_articles = parse_body_logic(body)
+              ...
+              total = resulting_articles.length
+              resulting_articles.each do |article|
+                  target = Target.new
+                  target.sid = article[:key]
+                  target.title = article[:title]
+                  ...
+                  block.call(target, total)
+              end
+          end
+        end
+      end
+    end
+
+The source of this gem contains several examples that you can build on.
 
 ## Contributing
 
