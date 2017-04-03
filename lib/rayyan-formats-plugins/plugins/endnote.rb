@@ -1,6 +1,8 @@
+require 'ref_parsers'
+
 module RayyanFormats
   module Plugins
-    class EndNote < Base
+    class EndNote < RayyanFormats::Base
       
       title 'EndNote'
       extension 'enw'
@@ -10,55 +12,48 @@ module RayyanFormats
         first_line.start_with?('%0')
       end
 
-      parse do |body, filename, &block|
-        articles = RefParsers::EndNoteParser.new.parse(body)
+      do_import do |body, filename, &block|
+        articles = ::RefParsers::EndNoteParser.new.parse(body)
         total = articles.length
-        pubtype_journal = PublicationType.where(name: "Journal Article").first_or_initialize
 
         # articles.select{|entry| entry['type'] == 'Journal Article'}.each do |article|
         articles.each do |article|
-          mArticle = Article.new
-          mArticle.title = article['T']
-          mArticle.jcreated_at = ScraperBase.to_date article['D']
-          mArticle.jvolume = article['V'].to_i rescue 0
-          mArticle.pagination = article['P']
+          target = Target.new
+          target.title = article['T']
+          target.date_array = [article['D']]
+          target.jvolume = article['V'].to_i rescue 0
+          target.pagination = article['P']
+          target.authors = get_authors article
+          target.abstracts = [article['X']].compact
+          target.jissue = (article['N'] || article['N']).to_i rescue 0
+          target.url = article['U'] || article['>']
+          target.publication_types = get_publication_types article
+          target.publisher_name = article['I']
+          target.publisher_location = article['C']
+          target.journal_title = article['J'] || article['B']
+          target.journal_issn = article['@']
+          target.language = article['G']
+          target.notes = try_join_arr article['1']
 
-          mArticle.insert_ordered_authors(
-            %w(A E Y ?)
-            .map{|k| article[k] || []}  # could return arrays or strings
-            .flatten
-            .map{|a| a.split(/\s*;\s*|\s*and\s*/)} # split on ; or and
-            .flatten
-          )
-
-          mArticle.abstracts.build content: article['X'] if article['X']
-
-          case article['type']
-          when 'Journal Article'
-            mArticle.publication_types << pubtype_journal
-          else
-            mArticle.publication_types << PublicationType.where(name: article['type']).first_or_initialize
-          end
-
-          mArticle.jissue = (article['N'] || article['N']).to_i rescue 0
-          mArticle.url = article['U'] || article['>']
-
-          mArticle.publisher = Publisher.where(name: article['I']).first_or_initialize {|p|
-            p.location = article['C']
-          } unless article['I'].blank?
-
-          journal = article['J'] || article['B']
-          mArticle.journal = Journal.where(title: journal).first_or_create {|j|
-            j.issn = article['@']
-          } unless journal.blank?
-
-          mArticle.language = article['G']
-          mArticle.notes = get_notes(article['1'])
-
-          block.call(mArticle, total)
+          block.call(target, total)
         end
       end
       
+      class << self
+        def get_authors(article)
+          %w(A E Y ?)
+          .map{|k| article[k] || []}  # could return arrays or strings
+          .flatten
+          .map{|a| a.split(/\s*;\s*|\s*and\s*/)} # split on ; or and
+          .flatten
+        end
+
+        def get_publication_types(article)
+          [article['type'] == 'Journal Article' ? 'Journal Article' : article['type']]
+        end
+
+      end # class methods
+
     end # class
   end # module
 end # module

@@ -1,6 +1,6 @@
 module RayyanFormats
   module Plugins
-    class PubmedXML < Base
+    class PubmedXML < RayyanFormats::Base
       
       title 'PubMed XML'
       extension 'xml'
@@ -10,7 +10,7 @@ module RayyanFormats
         first_line.start_with?('<?xml')
       end
 
-      parse do |body, filename, &block|
+      do_import do |body, filename, &block|
         total = PubMedScraper.new([[]]).parse_search_results(body) do |mArticle, is_new, total|
           block.call(mArticle, total, is_new)
         end

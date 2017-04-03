@@ -1,19 +1,21 @@
+require 'docx'
+
 module RayyanFormats
   module Plugins
-    class WordDocument < Base
+    class WordDocument < RayyanFormats::Base
       
       title 'Word Document'
       extension 'docx'
-      description 'Supports text only in one of the standard formats.'
+      description 'Supports text only in one of the core formats.'
 
-      parse do |body, filename, &block|
+      do_import do |body, filename, &block|
         begin
           tmpfile = Tempfile.new ''
           tmpfile.binmode
           tmpfile.write(body)
           tmpfile.close
-          doc = Docx::Document.open(tmpfile.path)
-          self.text_format.parse(doc.text, filename, &block)
+          doc = ::Docx::Document.open(tmpfile.path)
+          self.text_format.do_import(doc.text, filename, &block)
         end
       end
       

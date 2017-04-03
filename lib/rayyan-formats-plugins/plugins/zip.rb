@@ -1,13 +1,14 @@
+require 'zip'
+
 module RayyanFormats
   module Plugins
-    class Zip < Base
+    class Zip < RayyanFormats::Base
       
       title 'ZIP'
       extension 'zip'
-      description 'Supports compressed zip archives containing multiple files in any of the above mentioned formats'
+      description 'Supports compressed zip archives containing multiple files in any of the other formats, or recursively zip archives.'
 
-      parse do |body, filename, &block|
-        require 'zip'
+      do_import do |body, filename, &block|
 
         # Need to write file to Disk as RubyZip Input Stream doesnt read more than
         # a single entry from Zips Created by Mac
@@ -17,16 +18,16 @@ module RayyanFormats
           tmpfile.write(body)
           tmpfile.close
           valid_entries = 0
-          Zip::File.open(tmpfile.path) do |zip_file|
+          ::Zip::File.open(tmpfile.path) do |zip_file|
             grand_total = 0
             zip_file.each do |entry|
-              # Rails.logger.debug "Extracting #{entry.name}"
+              logger "Extracting #{entry.name}"
               next if entry.name.include?('__MACOS')
               begin
                 entry_total = nil
                 ext = File.extname(entry.name).delete('.')
                 format = self.match_format(ext)
-                format.parse(entry.get_input_stream.read, entry.name) do |*arguments|
+                format.do_import(entry.get_input_stream.read, entry.name) do |*arguments|
                   if entry_total.nil?
                     # first yielded article in entry
                     entry_total = arguments[1]
@@ -42,7 +43,7 @@ module RayyanFormats
             end
           end
           raise "Zip file has no valid entries" if valid_entries == 0
-          # Rails.logger.debug "Successfully extracted #{valid_entries} entry from zip file #{filename}"
+          logger "Successfully extracted #{valid_entries} entry from zip file #{filename}"
         ensure
           tmpfile.close
         end
