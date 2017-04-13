@@ -53,15 +53,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bibtex-ruby
   bundler (~> 1.3)
   coderay (~> 1.1)
-  docx (~> 0.2.07)
   log4r (~> 1.0)
   rake (~> 0)
-  rayyan-formats-core
   rayyan-formats-plugins!
-  ref_parsers
   rspec (~> 3.5)
   simplecov (~> 0.14)
 
