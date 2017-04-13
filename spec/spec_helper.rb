@@ -22,6 +22,7 @@ SimpleCov.start do
   add_filter "/spec"
 end
 
+require 'rayyan-formats-core-shared-examples'
 require 'rayyan-formats-plugins'
 
 RSpec.configure do |config|

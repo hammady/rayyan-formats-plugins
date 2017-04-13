@@ -25,7 +25,7 @@ module RayyanFormats
           target.pagination = article['P']
           target.authors = get_authors article
           target.abstracts = [article['X']].compact
-          target.jissue = (article['N'] || article['N']).to_i rescue 0
+          target.jissue = article['N'].to_i rescue 0
           target.url = article['U'] || article['>']
           target.publication_types = get_publication_types article
           target.publisher_name = article['I']

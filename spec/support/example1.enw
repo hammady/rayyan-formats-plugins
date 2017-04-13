@@ -1,0 +1,22 @@
+%0 Journal Article
+%T title1
+%A a1l, a1f and a2l, a2f
+%E a3l, a3f; a4l, a4f
+%J journal1
+%V 1
+%N 10
+%P pages1
+%@ issn1
+%D 2017
+%I publisher1
+%C location1
+%X abstract1
+%U url1
+%G lang1
+%1 notes1
+
+%0 Another type
+%Y a1l, a1f and a2l, a2f
+%? a3l, a3f; a4l, a4f
+%B journal2
+%> url2
