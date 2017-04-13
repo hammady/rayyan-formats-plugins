@@ -18,10 +18,10 @@ Or install it yourself as:
 
 ## Usage
 
-To configure your client application to use some or all of the format plugins here, call the `formats` method. Typically, in Rails, this is done in an initializer:
+To configure your client application to use some or all of the format plugins here, call the `plugins` method. Typically, in Rails, this is done in an initializer:
 
     # config/initializers/rayyan-formats.rb
-    RayyanFormats::Base.formats = [
+    RayyanFormats::Base.plugins = [
       RayyanFormats::Plugins::Refman,
       RayyanFormats::Plugins::EndNote,
       RayyanFormats::Plugins::BibTeX,

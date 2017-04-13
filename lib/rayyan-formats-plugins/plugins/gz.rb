@@ -11,12 +11,13 @@ module RayyanFormats
       do_import do |body, filename, &block|
         filename.gsub!(/\.gz$/, '')
         ext = File.extname(filename).delete('.')
-        format = self.match_format(ext)
+        ext = 'txt' if ext.length == 0
+        plugin = self.match_plugin(ext)
         fileContent = StringIO.new(body)
         gzipped = Zlib::GzipReader.new(fileContent)
         fileContent = StringIO.new(gzipped.read).string
         gzipped.close
-        format.do_import(fileContent, filename, &block)
+        plugin.do_import(fileContent, filename, &block)
       end
       
     end # class

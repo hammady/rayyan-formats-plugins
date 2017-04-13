@@ -7,7 +7,7 @@ require 'rayyan-formats-core'
 require 'rayyan-formats-plugins'
 require 'log4r'
 
-RayyanFormats::Base.formats = [
+RayyanFormats::Base.plugins = [
   RayyanFormats::Plugins::Refman,
   RayyanFormats::Plugins::EndNote,
   RayyanFormats::Plugins::BibTeX,
@@ -15,11 +15,11 @@ RayyanFormats::Base.formats = [
   RayyanFormats::Plugins::GZ,
   RayyanFormats::Plugins::Zip
 ]
-puts RayyanFormats::Base.formats
+puts RayyanFormats::Base.plugins
 
 begin
-  puts RayyanFormats::Base.match_format('ris')
-  puts RayyanFormats::Base.match_format('foo')
+  puts RayyanFormats::Base.match_plugin('ris')
+  puts RayyanFormats::Base.match_plugin('foo')
 rescue => e
   puts "Exception: #{e.message}"
 end

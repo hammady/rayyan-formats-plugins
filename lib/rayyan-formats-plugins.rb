@@ -1,3 +1,4 @@
+require "rayyan-formats-core"
 require "rayyan-formats-plugins/version"
 require "rayyan-formats-plugins/plugins/bibtex"
 require "rayyan-formats-plugins/plugins/endnote"

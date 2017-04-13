@@ -9,7 +9,6 @@ module RayyanFormats
       description 'Supports compressed zip archives containing multiple files in any of the other formats, or recursively zip archives.'
 
       do_import do |body, filename, &block|
-
         # Need to write file to Disk as RubyZip Input Stream doesnt read more than
         # a single entry from Zips Created by Mac
         begin
@@ -26,8 +25,9 @@ module RayyanFormats
               begin
                 entry_total = nil
                 ext = File.extname(entry.name).delete('.')
-                format = self.match_format(ext)
-                format.do_import(entry.get_input_stream.read, entry.name) do |*arguments|
+                ext = 'txt' if ext.length == 0
+                plugin = self.match_plugin(ext)
+                plugin.send(:do_import, entry.get_input_stream.read, entry.name) do |*arguments|
                   if entry_total.nil?
                     # first yielded article in entry
                     entry_total = arguments[1]
@@ -42,7 +42,7 @@ module RayyanFormats
               end
             end
           end
-          raise "Zip file has no valid entries" if valid_entries == 0
+          raise "Zip file has no supported entries. Entries must have one of the following extensions: #{self.extensions_str}" if valid_entries == 0
           logger "Successfully extracted #{valid_entries} entry from zip file #{filename}"
         ensure
           tmpfile.close
@@ -52,8 +52,8 @@ module RayyanFormats
         # Zip::InputStream.open(StringIO.new(body)) do |io|
         #   while (entry = io.get_next_entry)
         #     ext = File.extname(entry.name).delete('.')
-        #     format = self.match_format(ext) rescue next
-        #     format.parse(io.read, entry.name, &block)
+        #     plugin = self.match_plugin(ext) rescue next
+        #     plugin.parse(io.read, entry.name, &block)
         #   end
         # end  
       end

@@ -15,7 +15,7 @@ module RayyanFormats
           tmpfile.write(body)
           tmpfile.close
           doc = ::Docx::Document.open(tmpfile.path)
-          self.text_format.do_import(doc.text, filename, &block)
+          PlainText.send(:do_import, doc.text, filename, &block)
         end
       end
       
