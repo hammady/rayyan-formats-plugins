@@ -30,13 +30,13 @@ module RayyanFormats
           target.jvolume = article['VL'].to_i rescue 0
           target.pagination = "#{article['SP']}#{article['EP'] ? '-' + article['EP'] : ''}"
           target.authors = %w(AU A1 A2 A3 A4).map{|k| article[k] || []}.flatten
-          target.abstracts = [article['AB'], article['N2']].compact
+          target.abstracts = [article['AB'], article['N2']].compact.flatten
           target.publication_types = get_publication_types article['type']
           target.keywords = get_keywords article['KW']
           target.jissue = (article['IS'] || article['M1']).to_i rescue 0
           target.url = article['UR']
           target.publisher_name = article['PB']
-          target.publisher_location = "#{article['AD']} #{article['CY']}"
+          target.publisher_location = "#{article['AD']} #{article['CY']}".strip
           target.language = article['LA']
           target.journal_title = article['T2'] || article['JO'] || article['JF'] || article['J2']
           target.journal_abbreviation = article['JA'] || article['J1'] || article['J2']
@@ -76,8 +76,8 @@ module RayyanFormats
           .map {|kw|
             kw
             .split(KW_REGEX)
-            .reject{|kw| kw.blank?}
             .map(&:strip)
+            .reject{|kw| kw == ""}
           }.flatten
         end
       end # class methods

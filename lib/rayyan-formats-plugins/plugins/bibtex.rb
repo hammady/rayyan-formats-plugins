@@ -20,14 +20,14 @@ module RayyanFormats
         # TODO: FILTER ONLY @articles?
         b['@article'].each do |article|
           target = Target.new
-          target.sid = to_s_or_nil article['key']
+          target.sid = to_s_or_nil article.key
+          target.publication_types = ["Journal Article"] # :article
           target.title = article['title'].to_s
-          target.date_array = [article['year'], article['month']].compact.map(&:to_s)
+          target.date_array = convert_date article['year'], article['month']
           target.jvolume = article['volume'].to_i rescue 0
           target.pagination = to_s_or_nil article['pages']
           target.authors = article[:author].split(/\s*;\s*|\s*and\s*/) if article[:author]
           target.affiliation = to_s_or_nil article['institution']
-          target.publication_types = [to_s_or_nil(article['type'])].compact
           target.jissue = article['number'].to_i rescue 0
           target.url = to_s_or_nil article['url']
           target.collection = to_s_or_nil article['series']
@@ -43,6 +43,13 @@ module RayyanFormats
       class << self
         def to_s_or_nil(value)
           value.to_s unless value.nil?
+        end
+
+        MONTHS = %w(dummy jan feb mar apr may jun jul aug sep oct nov dec)
+
+        def convert_date(year, month)
+          month = MONTHS.index(month) unless month.nil?
+          [year, month].compact.map(&:to_s)
         end
       end # class methods
 

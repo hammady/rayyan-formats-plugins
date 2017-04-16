@@ -1,0 +1,101 @@
+TY  - JOUR
+AN  - key1
+T1  - title1
+PY  - 2017/10/1
+VL  - 1
+IS  - 10
+SP  - pages1
+AU  - a1l, a1f
+A1  - a2l, a2f
+A2  - a3l, a3f
+A3  - a4l, a4f
+A4  - a5l, a5f
+KW  - kw1
+kw2
+kw3
+KW  - kw4
+kw5
+kw6
+KW  - kw7
+KW  - kw8
+KW  - kw9-- kw10-- kw11--
+KW  - kw12 ; kw13 ;; ; kw14;;kw15
+UR  - url1
+LA  - lang1
+N1  - notes1
+AB  - abstract1
+AB  - abstract2
+PB  - publisher1
+AD  - location1
+CY  - city1
+T2  - journal1
+JA  - j1
+SN  - issn1
+T3  - collection1
+AV  - affiliation1
+ER  - 
+
+TY  - ELEC
+T1  - title2
+DA  - 2017-10-1
+SP  - pages1
+EP  - pages2
+AU  - a1l, a1f
+AU  - a2l, a2f
+AU  - a3l, a3f
+AU  - a4l, a4f
+AU  - a5l, a5f
+N2  - abstract1
+M1  - 10
+AD  - location1
+JO  - journal1
+J1  - j1
+ER  - 
+
+TY  - ABST
+TI  - title3
+DA  - 2017 10 1
+EP  - pages2
+A1  - a1l, a1f
+A1  - a2l, a2f
+A1  - a3l, a3f
+A1  - a4l, a4f
+A1  - a5l, a5f
+AB  - abstract1
+N2  - abstract2
+CY  - city1
+JF  - journal1
+J2  - j1
+ER  - 
+
+TY  - EJOUR
+CT  - title4
+Y1  - 2017
+Y2  - 10
+Y3  - 1
+A2  - a1l, a1f
+A2  - a2l, a2f
+A2  - a3l, a3f
+A2  - a4l, a4f
+A2  - a5l, a5f
+J2  - journal1
+ER  - 
+
+TY  - THES
+BT  - title5
+DA  - 2017-10-1
+A3  - a1l, a1f
+A3  - a2l, a2f
+A3  - a3l, a3f
+A3  - a4l, a4f
+A3  - a5l, a5f
+ER  - 
+
+TY  - OTHER_PUBTYPE
+T1  - title6
+A4  - a1l, a1f
+A4  - a2l, a2f
+A4  - a3l, a3f
+A4  - a4l, a4f
+A4  - a5l, a5f
+ER  - 

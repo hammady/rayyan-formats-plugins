@@ -21,7 +21,7 @@ describe EndNote do
 
     it_behaves_like "repetitive target yielder"
 
-    it "assigns correct values from first line" do
+    it "assigns correct values" do
       first_line = true
       EndNote.send(:do_import, body, filename) do |target|
         if first_line
