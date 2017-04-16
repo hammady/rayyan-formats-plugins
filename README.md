@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/rayyanqcri/rayyan-formats-plugins.svg?branch=master)](https://travis-ci.org/rayyanqcri/rayyan-formats-plugins)
+
 # RayyanFormats Plugins
 
 Plugins for RayyanFormats. For details, please check the core plugin [rayyan-formats-core](https://github.com/rayyanqcri/rayyan-formats-core).
