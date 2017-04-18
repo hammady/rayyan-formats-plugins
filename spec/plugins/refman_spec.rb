@@ -84,4 +84,54 @@ describe Refman do
       end
     end
   end
+
+  describe ".do_export" do
+    let(:plugin) { Refman }
+    let(:target) {
+      t = RayyanFormats::Target.new
+      t.publication_types = ['Journal Article']
+      t.sid = 'key1'
+      t.title = 'title1'
+      t.date_array = [2017, 4, 15]
+      t.journal_title = 'journal1'
+      t.journal_issn = 'issn1'
+      t.journal_abbreviation = 'abbrev1'
+      t.jvolume = 1
+      t.jissue = 10
+      t.pagination = 'pages1'
+      t.authors = ['al1, af1', 'al2, af2']
+      t.affiliation = 'affiliation1'
+      t.url = 'url1'
+      t.language = 'lang1'
+      t.publisher_name = 'publisher1'
+      t.publisher_location = 'location1'
+      t.collection = 'collection1'
+      t.keywords = %w(kw1 kw2 kw3)
+      t.abstracts = ['abstract1', 'abstract2']
+      t.notes = 'notes1'
+      t
+    }
+    let(:target_s_abstracts) {
+      File.read('spec/support/example3.ris')
+    }
+    let(:target_s) {
+      File.read('spec/support/example2.ris')
+    }
+
+    it "emits target if not nil (without abstracts)" do
+      output = plugin.send(:do_export, target, {include_abstracts: false})
+      expect(output).to eq(target_s)
+    end
+
+    it "emits target if not nil (with abstracts)" do
+      output = plugin.send(:do_export, target, {include_abstracts: true})
+      expect(output).to eq(target_s_abstracts)
+    end
+
+    it "does not emit target if nil" do
+      output = plugin.send(:do_export, nil, {})
+      expect(output).not_to eq(target_s)
+    end
+
+  end
 end
