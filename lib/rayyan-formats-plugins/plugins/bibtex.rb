@@ -20,20 +20,23 @@ module RayyanFormats
         # TODO: FILTER ONLY @articles?
         b['@article'].each do |article|
           target = Target.new
-          target.sid = to_s_or_nil article.key
           target.publication_types = ["Journal Article"] # :article
+          target.sid = to_s_or_nil article.key
           target.title = article['title'].to_s
           target.date_array = convert_date article['year'], article['month']
+          target.journal_title = to_s_or_nil article['journal']
+          target.journal_issn = to_s_or_nil article['issn']
           target.jvolume = article['volume'].to_i rescue 0
+          target.jissue = article['number'].to_i rescue 0
           target.pagination = to_s_or_nil article['pages']
           target.authors = article[:author].split(/\s*;\s*|\s*and\s*/) if article[:author]
           target.affiliation = to_s_or_nil article['institution']
-          target.jissue = article['number'].to_i rescue 0
           target.url = to_s_or_nil article['url']
-          target.collection = to_s_or_nil article['series']
+          target.language = to_s_or_nil article['language']
           target.publisher_name = to_s_or_nil article['publisher']
           target.publisher_location = to_s_or_nil article['address']
-          target.journal_title = to_s_or_nil article['journal']
+          target.collection = to_s_or_nil article['series']
+          target.keywords = to_arr_or_nil article['keywords']
           target.abstracts = [to_s_or_nil(article['abstract'])].compact
           target.notes = to_s_or_nil article['note']
 
@@ -44,26 +47,33 @@ module RayyanFormats
       do_export do |target, options|
         "@article{#{get_unique_id(target, options)},\n" + [
           emit_line("title", target.title),
-          target.authors ? emit_line("author", target.authors.join(' and ')) : nil,
-          emit_line("institution", target.affiliation),
-          emit_line("journal", target.journal_title),
-          target.jvolume && target.jvolume > 0 ? emit_line("volume", target.jvolume) : nil,
-          target.jissue && target.jissue > 0 ? emit_line("number", target.jissue) : nil,
           target.date_array && target.date_array[0] ? emit_line("year", target.date_array[0]) : nil,
           target.date_array && target.date_array[1] ? emit_line("month", target.date_array[1]) : nil,
+          emit_line("journal", target.journal_title),
+          emit_line("issn", target.journal_issn),
+          target.jvolume && target.jvolume > 0 ? emit_line("volume", target.jvolume) : nil,
+          target.jissue && target.jissue > 0 ? emit_line("number", target.jissue) : nil,
+          emit_line("pages", target.pagination),
+          target.authors ? emit_line("author", target.authors.join(' and ')) : nil,
+          emit_line("institution", target.affiliation),
           emit_line("url", target.url),
-          emit_line("series", target.collection),
+          emit_line("language", target.language),
           emit_line("publisher", target.publisher_name),
           emit_line("address", target.publisher_location),
-          emit_line("pages", target.pagination),
+          emit_line("series", target.collection),
+          target.keywords ? emit_line("keywords", target.keywords.join(', ')) : nil,
           options[:include_abstracts] && target.abstracts ? emit_line("abstract", target.abstracts.join("\n")) : nil,
           emit_line("note", target.notes)
-        ].compact.join(",\n") + "\n}\n"
+        ].compact.join(",\n") + "\n}\n\n" if target
       end
 
       class << self
         def to_s_or_nil(value)
           value.to_s unless value.nil?
+        end
+
+        def to_arr_or_nil(value)
+          value.to_s.split(/\s*,\s*/) unless value.nil?
         end
 
         MONTHS = %w(dummy jan feb mar apr may jun jul aug sep oct nov dec)
