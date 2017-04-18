@@ -1,7 +1,9 @@
 %0 Journal Article
+%M 123456
 %T title1
 %A a1l, a1f and a2l, a2f
 %E a3l, a3f; a4l, a4f
+%+ affiliation1
 %J journal1
 %V 1
 %N 10
@@ -10,6 +12,16 @@
 %D 2017
 %I publisher1
 %C location1
+%K kw1
+kw2
+kw3
+%K kw4
+kw5
+kw6
+%K kw7
+%K kw8
+%K kw9-- kw10-- kw11--
+%K kw12 ; kw13 ;; ; kw14;;kw15
 %X abstract1
 %U url1
 %G lang1

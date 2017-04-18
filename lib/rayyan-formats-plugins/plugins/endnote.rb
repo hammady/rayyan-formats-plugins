@@ -8,6 +8,8 @@ module RayyanFormats
       extension 'enw'
       description 'Supports entries of type Journal Article, full documentation here: http://www.harzing.com/pophelp/exporting.htm#endnote and here: http://wiki.cns.iu.edu/pages/viewpage.action?pageId=1933370'
 
+      KW_REGEX = /#{::RefParsers::NEWLINE_MERGER}|--|;/
+
       detect do |first_line, lines|
         first_line.start_with?('%0')
       end
@@ -19,20 +21,24 @@ module RayyanFormats
         # articles.select{|entry| entry['type'] == 'Journal Article'}.each do |article|
         articles.each do |article|
           target = Target.new
+          target.publication_types = [article['type']]
+          target.sid = article['M']
           target.title = article['T']
           target.date_array = get_date_array article
-          target.jvolume = article['V'].to_i rescue 0
-          target.pagination = article['P']
-          target.authors = get_authors article
-          target.abstracts = [article['X']].flatten.compact
-          target.jissue = article['N'].to_i rescue 0
-          target.url = article['U'] || article['>']
-          target.publication_types = [article['type']]
-          target.publisher_name = article['I']
-          target.publisher_location = article['C']
           target.journal_title = article['J'] || article['B']
           target.journal_issn = article['@']
+          target.jvolume = article['V'].to_i rescue 0
+          target.jissue = article['N'].to_i rescue 0
+          target.pagination = article['P']
+          target.authors = get_authors article
+          target.affiliation = article['+']
+          target.url = article['U'] || article['>']
           target.language = article['G']
+          target.publisher_name = article['I']
+          target.publisher_location = article['C']
+          # TODO collection
+          target.keywords = get_keywords article['K']
+          target.abstracts = [article['X']].flatten.compact
           target.notes = try_join_arr article['1']
 
           block.call(target, total)
@@ -42,23 +48,27 @@ module RayyanFormats
       do_export do |target, options|
         [
           emit_line("0", target.publication_types.first),
+          emit_line("M", target.sid),
           emit_line("T", target.title),
-          target.authors ? target.authors.map{|author| emit_line("A", author)} : nil,
-          emit_line("J", target.journal_title),
-          target.jvolume && target.jvolume > 0 ? emit_line("V", target.jvolume) : nil,
-          target.jissue && target.jissue > 0 ? emit_line("N", target.jissue) : nil,
           target.date_array ? emit_line("D", target.date_array.first) : nil,
           target.date_array ? emit_line("8", target.date_array.join("-")) : nil,
+          emit_line("J", target.journal_title),
+          emit_line("@", target.journal_issn),
+          target.jvolume && target.jvolume > 0 ? emit_line("V", target.jvolume) : nil,
+          target.jissue && target.jissue > 0 ? emit_line("N", target.jissue) : nil,
+          emit_line("P", target.pagination),
+          target.authors ? target.authors.map{|author| emit_line("A", author)} : nil,
+          emit_line("+", target.affiliation),
           emit_line("U", target.url),
+          emit_line("G", target.language),
           emit_line("I", target.publisher_name),
           emit_line("C", target.publisher_location),
-          emit_line("P", target.pagination),
-          emit_line("G", target.language),
-          emit_line("@", target.journal_issn),
+          # TODO collection
+          target.keywords ? target.keywords.map{|kw| emit_line("K", kw)} : nil,
           options[:include_abstracts] && target.abstracts ? target.abstracts.map{|ab| emit_line("X", ab)} : nil,
           emit_line("1", target.notes),
           "\n"
-        ].flatten.join
+        ].flatten.join if target
       end
       
       class << self
@@ -73,6 +83,17 @@ module RayyanFormats
           .flatten
           .map{|a| a.split(/\s*;\s*|\s*and\s*/)} # split on ; or and
           .flatten
+        end
+
+        def get_keywords(keywords)
+          [keywords || []]
+          .flatten
+          .map {|kw|
+            kw
+            .split(KW_REGEX)
+            .map(&:strip)
+            .reject{|kw| kw == ""}
+          }.flatten
         end
 
         def emit_line(key, value)
