@@ -9,7 +9,7 @@ describe GZ do
     let(:plugin) { double(do_import: true) }
 
     before {
-      allow(GZ).to receive(:match_plugin).with('txt') { plugin }
+      allow(GZ).to receive(:match_import_plugin).with('txt') { plugin }
     }
 
     shared_examples "gz reader" do

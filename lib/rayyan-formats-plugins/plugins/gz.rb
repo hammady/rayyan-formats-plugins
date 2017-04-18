@@ -12,7 +12,7 @@ module RayyanFormats
         filename.gsub!(/\.gz$/, '')
         ext = File.extname(filename).delete('.')
         ext = 'txt' if ext.length == 0
-        plugin = self.match_plugin(ext)
+        plugin = self.match_import_plugin(ext)
         fileContent = StringIO.new(body)
         gzipped = Zlib::GzipReader.new(fileContent)
         fileContent = StringIO.new(gzipped.read).string

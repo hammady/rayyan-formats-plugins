@@ -49,6 +49,30 @@ module RayyanFormats
         end  
       end
 
+      do_export do |target, options|
+        [
+          emit_line("TY", "JOUR"),
+          emit_line("TI", target.title),
+          target.authors ? target.authors.map{|author| emit_line("AU", author)} : nil,
+          emit_line("T2", target.journal_title),
+          target.jvolume && target.jvolume > 0 ? emit_line("VL", target.jvolume) : nil,
+          target.jissue && target.jissue > 0 ? emit_line("IS", target.jissue) : nil,
+          target.date_array ? target.date_array.map.with_index{|y, i| emit_line("Y#{i+1}", y)} : nil,
+          emit_line("UR", target.url),
+          emit_line("PB", target.publisher_name),
+          emit_line("CY", target.publisher_location),
+          emit_line("SP", target.pagination),
+          target.keywords ? target.keywords.map{|kw| emit_line("KW", kw)} : nil,
+          emit_line("LA", target.language),
+          emit_line("SN", target.journal_issn),
+          emit_line("J2", target.journal_abbreviation),
+          options[:include_abstracts] && target.abstracts ? target.abstracts.map{|ab| emit_line("AB", ab)} : nil,
+          emit_line("N1", target.notes),
+          emit_line("AN", target.sid),
+          "ER  -\n\n"
+        ].flatten.join
+      end
+
       class << self
         def get_date_array(article)
           date_line = article['PY']
@@ -79,6 +103,10 @@ module RayyanFormats
             .map(&:strip)
             .reject{|kw| kw == ""}
           }.flatten
+        end
+
+        def emit_line(key, value)
+          "#{key}  - #{value}\n" unless value.nil? || value.to_s.strip == ''
         end
       end # class methods
 

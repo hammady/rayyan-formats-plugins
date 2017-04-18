@@ -17,18 +17,17 @@ RayyanFormats::Base.plugins = [
 ]
 puts RayyanFormats::Base.plugins
 
-begin
-  puts RayyanFormats::Base.match_plugin('ris')
-  puts RayyanFormats::Base.match_plugin('foo')
-rescue => e
-  puts "Exception: #{e.message}"
-end
-puts RayyanFormats::Base.extensions_str
+puts RayyanFormats::Base.send(:match_import_plugin, 'ris')
+puts RayyanFormats::Base.send(:match_import_plugin, 'foo')
+puts RayyanFormats::Base.import_extensions_str
+puts RayyanFormats::Base.export_extensions_str
 
 logger = Log4r::Logger.new('RayyanFormats')
 logger.outputters = Log4r::Outputter.stdout
 RayyanFormats::Base.logger = logger
 
+puts "Exporting..."
+plugin = RayyanFormats::Base.get_export_plugin('bib')
 %w(
   example.bib
   example.enw
@@ -41,7 +40,7 @@ RayyanFormats::Base.logger = logger
 ).map{|filename| "../rayyan/nonrails/citation_examples/#{filename}"}.each do |filename|
   RayyanFormats::Base.import(RayyanFormats::Source.new(filename)) { |target, total, is_new|
     # post processing for target
-    puts "Found target: #{target}. Total: #{total}. is_new: #{is_new}"
+    puts plugin.export(target)
   }
 end
 

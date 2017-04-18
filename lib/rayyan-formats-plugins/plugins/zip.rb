@@ -26,7 +26,7 @@ module RayyanFormats
                 entry_total = nil
                 ext = File.extname(entry.name).delete('.')
                 ext = 'txt' if ext.length == 0
-                plugin = self.match_plugin(ext)
+                plugin = self.match_import_plugin(ext)
                 plugin.send(:do_import, entry.get_input_stream.read, entry.name) do |*arguments|
                   if entry_total.nil?
                     # first yielded article in entry
@@ -42,7 +42,7 @@ module RayyanFormats
               end
             end
           end
-          raise "Zip file has no supported entries. Entries must have one of the following extensions: #{self.extensions_str}" if valid_entries == 0
+          raise "Zip file has no supported entries. Entries must have one of the following extensions: #{self.import_extensions_str}" if valid_entries == 0
           logger "Successfully extracted #{valid_entries} entry from zip file #{filename}"
         ensure
           tmpfile.close
@@ -52,7 +52,7 @@ module RayyanFormats
         # Zip::InputStream.open(StringIO.new(body)) do |io|
         #   while (entry = io.get_next_entry)
         #     ext = File.extname(entry.name).delete('.')
-        #     plugin = self.match_plugin(ext) rescue next
+        #     plugin = self.match_import_plugin(ext) rescue next
         #     plugin.parse(io.read, entry.name, &block)
         #   end
         # end  

@@ -21,7 +21,7 @@ describe RayyanFormats::Plugins::Zip do
       let(:target) { double }
 
       before {
-        allow(RayyanFormats::Plugins::Zip).to receive(:match_plugin) { nil }
+        allow(RayyanFormats::Plugins::Zip).to receive(:match_import_plugin) { nil }
       }
 
       context "when input file has no valid supported entries" do
@@ -34,8 +34,8 @@ describe RayyanFormats::Plugins::Zip do
 
       context "when input file has valid supported entries" do
         before {
-          allow(RayyanFormats::Plugins::Zip).to receive(:match_plugin).with('txt') { text_plugin }
-          allow(RayyanFormats::Plugins::Zip).to receive(:match_plugin).with('csv') { csv_plugin }
+          allow(RayyanFormats::Plugins::Zip).to receive(:match_import_plugin).with('txt') { text_plugin }
+          allow(RayyanFormats::Plugins::Zip).to receive(:match_import_plugin).with('csv') { csv_plugin }
         }
 
         it "decompresses the file and handles supported entries" do

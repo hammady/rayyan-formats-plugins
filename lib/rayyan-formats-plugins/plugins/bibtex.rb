@@ -35,9 +35,30 @@ module RayyanFormats
           target.publisher_location = to_s_or_nil article['address']
           target.journal_title = to_s_or_nil article['journal']
           target.abstracts = [to_s_or_nil(article['abstract'])].compact
+          target.notes = to_s_or_nil article['note']
 
           block.call(target, total)
         end  
+      end
+
+      do_export do |target, options|
+        "@article{#{get_unique_id(target, options)},\n" + [
+          emit_line("title", target.title),
+          target.authors ? emit_line("author", target.authors.join(' and ')) : nil,
+          emit_line("institution", target.affiliation),
+          emit_line("journal", target.journal_title),
+          target.jvolume && target.jvolume > 0 ? emit_line("volume", target.jvolume) : nil,
+          target.jissue && target.jissue > 0 ? emit_line("number", target.jissue) : nil,
+          target.date_array && target.date_array[0] ? emit_line("year", target.date_array[0]) : nil,
+          target.date_array && target.date_array[1] ? emit_line("month", target.date_array[1]) : nil,
+          emit_line("url", target.url),
+          emit_line("series", target.collection),
+          emit_line("publisher", target.publisher_name),
+          emit_line("address", target.publisher_location),
+          emit_line("pages", target.pagination),
+          options[:include_abstracts] && target.abstracts ? emit_line("abstract", target.abstracts.join("\n")) : nil,
+          emit_line("note", target.notes)
+        ].compact.join(",\n") + "\n}\n"
       end
 
       class << self
@@ -51,6 +72,19 @@ module RayyanFormats
           month = MONTHS.index(month) unless month.nil?
           [year, month].compact.map(&:to_s)
         end
+
+        def emit_line(key, value)
+          "  #{key}={#{value}}" unless value.nil? || value.to_s.strip == ''
+        end
+
+        def get_unique_id(target, options)
+          if target.sid && target.sid.to_s.strip != ''
+            target.sid
+          else
+            options[:unique_id]
+          end
+        end
+
       end # class methods
 
     end # class
