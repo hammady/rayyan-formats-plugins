@@ -44,7 +44,15 @@ Or
 
 ## Adding more formats
 
-Support for more formats can be done by subclassing `RayyanFormats::Base` and defining attributes and logic using simple DSL:
+Support for more formats can be done by subclassing `RayyanFormats::Base` and defining attributes and logic using simple DSL. The `detect` block is optional
+and if omitted will mark the plugin as non-core. This means that it won't go 
+through the detection pipeline and the `do_import` block will be executed
+directly if the extension matches.
+Core plugins, on the other hand, pass through the detection pipeline
+and must return `true` from the `detect` block for the `do_import` to be executed.
+
+If the plugin supports exporting as well, you must define a `do_export` block.
+Note that a plugin can support importing only, exporting only or both.
 
     module RayyanFormats
       module Plugins
@@ -74,9 +82,25 @@ Support for more formats can be done by subclassing `RayyanFormats::Base` and de
                   block.call(target, total)
               end
           end
+
+          do_export do |target, options|
+            # return a string representing the target in the specified format
+            "#{target.key}: #{target.title}\n"  # only an example
+          end
+
         end
       end
     end
+
+The `options` hash that the `do_export` accept can have the following keys:
+
+- `include_header: boolean` will be passed as `true` on the first target
+and `false` on the subsequent targets. If the format supports headers (e.g. CSV)
+then you must return the header concatenated before the target string representation.
+- `include_abstracts: boolean` denoting whether the client program wants
+the abstracts to be emitted.
+- `unique_id: <generated-unique-string>` will be passed everytime in case
+the format must emit a unique target identifier if not present already in the target.
 
 The source of this gem contains several examples that you can build on.
 
