@@ -27,44 +27,44 @@ describe Refman do
         expect(target.authors).to eq(["a1l, a1f", "a2l, a2f", "a3l, a3f", "a4l, a4f", "a5l, a5f"])
         case line
         when 0
+          expect(target.publication_types).to eq(["Journal Article"])
           expect(target.sid).to eq("key1")
           expect(target.title).to eq("title1")
           expect(target.date_array).to eq(["2017", "10", "1"])
-          expect(target.jvolume).to eq(1)
-          expect(target.jissue).to eq(10)
-          expect(target.pagination).to eq("pages1")
-          expect(target.keywords).to eq((1..15).map{|i| "kw#{i}"})
-          expect(target.url).to eq("url1")
-          expect(target.language).to eq("lang1")
-          expect(target.notes).to eq("notes1")
-          expect(target.abstracts).to eq(["abstract1", "abstract2"])
-          expect(target.publication_types).to eq(["Journal Article"])
-          expect(target.publisher_name).to eq("publisher1")
-          expect(target.publisher_location).to eq("location1 city1")
           expect(target.journal_title).to eq("journal1")
           expect(target.journal_issn).to eq("issn1")
           expect(target.journal_abbreviation).to eq("j1")
-          expect(target.collection).to eq("collection1")
+          expect(target.jvolume).to eq(1)
+          expect(target.jissue).to eq(10)
+          expect(target.pagination).to eq("pages1")
           expect(target.affiliation).to eq("affiliation1")
+          expect(target.url).to eq("url1")
+          expect(target.language).to eq("lang1")
+          expect(target.publisher_name).to eq("publisher1")
+          expect(target.publisher_location).to eq("location1 city1")
+          expect(target.collection).to eq("collection1")
+          expect(target.keywords).to eq((1..15).map{|i| "kw#{i}"})
+          expect(target.abstracts).to eq(["abstract1", "abstract2"])
+          expect(target.notes).to eq("notes1")
         when 1
           expect(target.publication_types).to eq(["Journal Article"])
           expect(target.title).to eq("title2")
           expect(target.date_array).to eq(["2017", "10", "1"])
-          expect(target.pagination).to eq("pages1-pages2")
-          expect(target.abstracts).to eq(["abstract1"])
-          expect(target.jissue).to eq(10)
-          expect(target.publisher_location).to eq("location1")
           expect(target.journal_title).to eq("journal1")
           expect(target.journal_abbreviation).to eq("j1")
+          expect(target.jissue).to eq(10)
+          expect(target.pagination).to eq("pages1-pages2")
+          expect(target.publisher_location).to eq("location1")
+          expect(target.abstracts).to eq(["abstract1"])
         when 2
           expect(target.publication_types).to eq(["Journal Article"])
           expect(target.title).to eq("title3")
           expect(target.date_array).to eq(["2017", "10", "1"])
-          expect(target.pagination).to eq("-pages2")
-          expect(target.abstracts).to eq(["abstract1", "abstract2"])
-          expect(target.publisher_location).to eq("city1")
           expect(target.journal_title).to eq("journal1")
           expect(target.journal_abbreviation).to eq("j1")
+          expect(target.pagination).to eq("-pages2")
+          expect(target.publisher_location).to eq("city1")
+          expect(target.abstracts).to eq(["abstract1", "abstract2"])
         when 3
           expect(target.publication_types).to eq(["Journal Article"])
           expect(target.title).to eq("title4")
@@ -132,6 +132,36 @@ describe Refman do
       output = plugin.send(:do_export, nil, {})
       expect(output).not_to eq(target_s)
     end
-
   end
+
+  describe ".get_publication_types" do
+    it "returns Journal Article" do
+      %w(JOUR ELEC ABST EJOUR).each do |pubtype|
+        expect(Refman.get_publication_types(pubtype)).to eq(["Journal Article"])
+      end
+    end
+
+    it "returns Thesis" do
+      expect(Refman.get_publication_types("THES")).to eq(["Thesis"])
+    end
+
+    it "returns publication type verbatim" do
+      expect(Refman.get_publication_types("foo")).to eq(["foo"])
+    end
+  end
+
+  describe ".set_publication_type" do
+    it "returns JOUR" do
+      expect(Refman.set_publication_type("Journal Article")).to eq("JOUR")
+    end
+
+    it "returns THES" do
+      expect(Refman.set_publication_type("Thesis")).to eq("THES")
+    end
+
+    it "returns publication type verbatim" do
+      expect(Refman.set_publication_type("foo")).to eq("foo")
+    end
+  end
+
 end
