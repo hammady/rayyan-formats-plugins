@@ -118,20 +118,7 @@ describe Refman do
       File.read('spec/support/example2.ris')
     }
 
-    it "emits target if not nil (without abstracts)" do
-      output = plugin.send(:do_export, target, {include_abstracts: false})
-      expect(output).to eq(target_s)
-    end
-
-    it "emits target if not nil (with abstracts)" do
-      output = plugin.send(:do_export, target, {include_abstracts: true})
-      expect(output).to eq(target_s_abstracts)
-    end
-
-    it "does not emit target if nil" do
-      output = plugin.send(:do_export, nil, {})
-      expect(output).not_to eq(target_s)
-    end
+    it_behaves_like "correct target emitter"   
   end
 
   describe ".get_publication_types" do
