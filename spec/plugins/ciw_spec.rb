@@ -27,22 +27,22 @@ describe CIW do
         expect(target.authors).to eq(["Elmagarmid, Ahmed","   Ouzzani, Mourad"])
         case line
         when 1
-    	   expect(target.publication_types).to eq(["Journal Article"])
-           expect(target.Document_type).to eq(["Article"])
-           expect(target.title).to eq("title1")
-           expect(target.date_array).to eq(["2014", "SEP"])
-           expect(target.pagination).to eq(["page1", "page2"])
-           expect(target.abstracts).to eq("1078-0432")
+           expect(target.publication_types).to eq(["Journal Article"])
+		   expect(target.Document_type).to eq(["Article"])
+		   expect(target.title).to eq("title1")
+		   expect(target.date_array).to eq(["2014", "SEP"])
+		   expect(target.pagination).to eq(["page1", "page2"])
+		   expect(target.abstracts).to eq("1078-0432")
 		   expect(target.journal_issn).to eq("issn1")
 		   expect(target.publisher_name).to eq("Publisher")
-           expect(target.publisher_location).to eq("Qatar")
-           expect(target.journal_title).to eq("journal1")
-           expect(target.journal_abbreviation).to eq("Clin. Genet")
+		   expect(target.publisher_location).to eq("Qatar")
+		   expect(target.journal_title).to eq("journal1")
+		   expect(target.journal_abbreviation).to eq("Clin. Genet")
 		   expect(target.jvolume).to eq(26)
 		   expect(target.jissue).to eq(9)
 		   expect(target.url).to eq("www.rayyan.qcri.com")
 		   expect(target.language).to eq("ENGLISH")
-           expect(target.journal_issn).to eq("1041-4347") 
+		   expect(target.journal_issn).to eq("1041-4347") 
 		   expect(target.ISI_unique_article_identifier).to eq("WOS:000341571100009") 
         end
         line += 1
@@ -55,8 +55,8 @@ end
     let(:plugin) { CIW }
     let(:target) {
       t = RayyanFormats::Target.new
-      t.publication_types = ['Journal Article']
-      t.authors = ["Elmagarmid, Ahmed","Ouzzani, Mourad"]
+	  t.publication_types = ['Journal Article']
+	  t.authors = ["Elmagarmid, Ahmed","Ouzzani, Mourad"]
 	  t.title = 'title1' 
 	  t.journal_title = 'journal1'
 	  t.date_array = ["2014", "SEP"]
@@ -66,12 +66,12 @@ end
 	  t.Document_type ="Article"
 	  t.publisher_name ="Publisher"
 	  t.publisher_location= "Qatar"
-      t.journal_abbreviation ="Clin. Genet"
-      t.jvolume = 26
-      t.jissue = 9
+	  t.journal_abbreviation ="Clin. Genet"
+	  t.jvolume = 26
+	  t.jissue = 9
 	  t.url = "www.rayyan.qcri.com"
 	  t.language = "ENGLISH"
-      t
+	  t
     }
     let(:target_s_abstracts) {
       File.read('spec/support/example2.ciw')

@@ -38,16 +38,16 @@ module RayyanFormats
           target.journal_abbreviation = article['JI'] ||article['J9']
           target.journal_issn = article['SN']
 		  target.Conference_location = article['CL']
-          target.Conference_title = article['CT']
-          target.Conference_Date = article['CY']
-          target.Research_field = article['WC']
+		  target.Conference_title = article['CT']
+		  target.Conference_Date = article['CY']
+		  target.Research_field = article['WC']
 		  target.Document_type = article['DT']
 		  target.Research_addresses = article['C1']
 		  target.Funding_text = article['FX']
 		  target.Cited_references= article['CR']
-          target.Cited_reference_count= article['NR']
+		  target.Cited_reference_count= article['NR']
 		  target.ISI_unique_article_identifier= article['UT']
-          block.call(target, total)
+		  block.call(target, total)
         end  
       end
 
@@ -55,26 +55,26 @@ module RayyanFormats
         [
 		  emit_line("FN","Thomson Reuters Web of Science"),
 		  emit_line("VR", "1.0"),
-          emit_line("PT", target.publication_types ? set_publication_type(target.publication_types.first) : 'J'),
+		  emit_line("PT", target.publication_types ? set_publication_type(target.publication_types.first) : 'J'),
 		  target.authors ? emit_line("AU", target.authors.first): nil,
 		  target.authors ? emit_line("  ", target.authors.last): nil,
-          emit_line("TI", target.title),
+		  emit_line("TI", target.title),
 		  emit_line("SO", target.journal_title),
 		  target.date_array ?  emit_line("PD", target.date_array.last): nil,
-          target.date_array ?  emit_line("PY", target.date_array.first) : nil,
-          target.pagination ?  emit_line("BP", target.pagination.first) : nil,
+		  target.date_array ?  emit_line("PY", target.date_array.first) : nil,
+		  target.pagination ?  emit_line("BP", target.pagination.first) : nil,
 		  target.pagination ?  emit_line("EP", target.pagination.last) : nil,
 		  options[:include_abstracts] && target.abstracts ? emit_line("AB", target.abstracts): nil,
 		  emit_line("SN", target.journal_issn),
 		  emit_line("DT", target.Document_type),
-          emit_line("PU", target.publisher_name),
+		  emit_line("PU", target.publisher_name),
 		  emit_line("PA", target.publisher_location),
-          emit_line("JI", target.journal_abbreviation),
-          target.jvolume && target.jvolume > 0 ? emit_line("VL", target.jvolume) : nil,
-          target.jissue && target.jissue > 0 ? emit_line("IS", target.jissue) : nil,
-          emit_line("UR", target.url),
-          emit_line("LA", target.language),
-          "ER\n\nEF"	
+		  emit_line("JI", target.journal_abbreviation),
+		  target.jvolume && target.jvolume > 0 ? emit_line("VL", target.jvolume) : nil,
+		  target.jissue && target.jissue > 0 ? emit_line("IS", target.jissue) : nil,
+		  emit_line("UR", target.url),
+		  emit_line("LA", target.language),
+		  "ER\n\nEF"	
         ].flatten.join if target
     end
 	 
