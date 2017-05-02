@@ -32,6 +32,7 @@ puts "Exporting..."
 plugin = RayyanFormats::Base.get_export_plugin('bib')
 %w(
   example.bib
+  example.ciw
   example.enw
   example.ris
   example.csv
