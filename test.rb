@@ -13,12 +13,14 @@ RayyanFormats::Base.plugins = [
   RayyanFormats::Plugins::BibTeX,
   RayyanFormats::Plugins::WordDocument,
   RayyanFormats::Plugins::GZ,
-  RayyanFormats::Plugins::Zip
+  RayyanFormats::Plugins::Zip,
+  RayyanFormats::Plugins::CIW
 ]
 puts RayyanFormats::Base.plugins
 
 puts RayyanFormats::Base.send(:match_import_plugin, 'ris')
 puts RayyanFormats::Base.send(:match_import_plugin, 'foo')
+puts RayyanFormats::Base.send(:match_import_plugin, 'ciw')
 puts RayyanFormats::Base.import_extensions_str
 puts RayyanFormats::Base.export_extensions_str
 
@@ -30,6 +32,7 @@ puts "Exporting..."
 plugin = RayyanFormats::Base.get_export_plugin('bib')
 %w(
   example.bib
+  example.ciw
   example.enw
   example.ris
   example.csv
