@@ -6,6 +6,7 @@ require "rayyan-formats-plugins/plugins/gz"
 require "rayyan-formats-plugins/plugins/refman"
 require "rayyan-formats-plugins/plugins/word_doc"
 require "rayyan-formats-plugins/plugins/zip"
+require "rayyan-formats-plugins/plugins/ciw"
 
 module RayyanFormats
   module Plugins
