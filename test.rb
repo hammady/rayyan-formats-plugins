@@ -14,11 +14,13 @@ RayyanFormats::Base.plugins = [
   RayyanFormats::Plugins::WordDocument,
   RayyanFormats::Plugins::GZ,
   RayyanFormats::Plugins::Zip
+  RayyanFormats::Plugins::CIW
 ]
 puts RayyanFormats::Base.plugins
 
 puts RayyanFormats::Base.send(:match_import_plugin, 'ris')
 puts RayyanFormats::Base.send(:match_import_plugin, 'foo')
+puts RayyanFormats::Base.send(:match_import_plugin, 'ciw')
 puts RayyanFormats::Base.import_extensions_str
 puts RayyanFormats::Base.export_extensions_str
 
