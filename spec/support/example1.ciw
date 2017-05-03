@@ -1,0 +1,39 @@
+FN Thomson Reuters Web of Science
+VR 1.0
+PT J
+AU a1l, a1f
+   a2l, a2f
+   a3l, a3f
+TI title1
+SO journal1
+PD SEP 1
+PY 2014
+BP page1
+AB abstract1a
+   abstract1b
+AB abstract2
+SN issn1
+PU publisher1
+PA location1
+JI abbrev1
+VL 10
+IS 1
+UR url1
+ID kw1;
+   kw2;
+   kw3
+LA lang1
+UT key1
+ER
+
+PT S
+TI title2
+PD NOV 1
+PY 2018
+SO journal2
+JI abbrev2
+IS 10
+VL 20
+ER
+
+EF
