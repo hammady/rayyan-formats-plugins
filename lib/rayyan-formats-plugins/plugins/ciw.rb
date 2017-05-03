@@ -1,4 +1,4 @@
-.:require 'ref_parsers'
+:require 'ref_parsers'
 
 module RayyanFormats
   module Plugins
