@@ -16,7 +16,7 @@ describe CIW do
   describe ".do_import" do
     let(:filename) { 'spec/support/example1.ciw' }
     let(:body) { File.read(filename) }
-    let(:expected_total) { 1 }
+    let(:expected_total) { 2 }
     let(:plugin) { CIW }
 
     it_behaves_like "repetitive target yielder"
@@ -43,6 +43,14 @@ describe CIW do
           expect(target.keywords).to eq((1..3).map{|i| "kw#{i}"})
 		      expect(target.language).to eq("lang1") 
 		      expect(target.sid).to eq("key1")
+        when 1
+          expect(target.publication_types).to eq(["Conference Proceedings"])
+          expect(target.title).to eq("title2")
+          expect(target.date_array).to eq(["2018", "11", "1"])
+          expect(target.journal_title).to eq("journal2")
+          expect(target.journal_abbreviation).to eq("abbrev2")
+          expect(target.jissue).to eq(10)
+          expect(target.jvolume).to eq(20)
         end
         line += 1
       end
