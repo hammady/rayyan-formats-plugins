@@ -62,7 +62,7 @@ end
     let(:plugin) { CIW }
     let(:target) {
       t = RayyanFormats::Target.new
-	    t.publication_types = ['Journal Article']
+	    t.publication_types = ['Conference Proceedings']
 	    t.authors = ["a1l, a1f","a2l, a2f","a3l, a3f"]
 	    t.title = 'title1' 
 	    t.journal_title = 'journal1'
