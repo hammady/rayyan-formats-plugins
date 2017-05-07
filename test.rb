@@ -5,7 +5,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'rayyan-formats-core'
 require 'rayyan-formats-plugins'
-require 'log4r'
+require 'logger'
 
 RayyanFormats::Base.plugins = [
   RayyanFormats::Plugins::Refman,
@@ -22,8 +22,8 @@ puts RayyanFormats::Base.send(:match_import_plugin, 'foo')
 puts RayyanFormats::Base.import_extensions_str
 puts RayyanFormats::Base.export_extensions_str
 
-logger = Log4r::Logger.new('RayyanFormats')
-logger.outputters = Log4r::Outputter.stdout
+logger = Logger.new(STDOUT)
+logger.level = Logger::DEBUG
 RayyanFormats::Base.logger = logger
 
 puts "Exporting..."
