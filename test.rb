@@ -38,7 +38,7 @@ plugin = RayyanFormats::Base.get_export_plugin('bib')
   s3/refman-example.ris.gz
   s3/zip-example.zip
 ).map{|filename| "../rayyan/nonrails/citation_examples/#{filename}"}.each do |filename|
-  RayyanFormats::Base.import(RayyanFormats::Source.new(filename)) { |target, total, is_new|
+  RayyanFormats::Base.import(RayyanFormats::Source.new(filename)) { |target, total|
     # post processing for target
     puts plugin.export(target)
   }
