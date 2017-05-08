@@ -34,7 +34,7 @@ GEM
       mini_portile2 (~> 2.1.0)
     rake (0.9.6)
     rayyan-formats-core (0.1.4)
-    ref_parsers (0.0.12)
+    ref_parsers (0.1.2)
     rspec (3.5.0)
       rspec-core (~> 3.5.0)
       rspec-expectations (~> 3.5.0)
