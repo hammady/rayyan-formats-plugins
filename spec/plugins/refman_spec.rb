@@ -150,5 +150,4 @@ describe Refman do
       expect(Refman.set_publication_type("foo")).to eq("foo")
     end
   end
-
 end
