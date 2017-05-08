@@ -77,7 +77,7 @@ module RayyanFormats
           "ER\n\nEF"	
         ].flatten.join if target
       end
-	 
+
       class << self
 	      def get_date_array(article)
 	        day = ("#{article['PD']}")
@@ -100,7 +100,7 @@ module RayyanFormats
           ]
         end
 
-	      MONTHS = %w(dummy JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC)
+        MONTHS = %w(dummy JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC)
 
         def set_convert_date(month)
          month = MONTHS.index(month) unless month.nil?
@@ -117,12 +117,12 @@ module RayyanFormats
           }.flatten
         end
 
-	  	  def get_abstrcats(article)
+        def get_abstrcats(article)
           %w(AB)
           .map{|k| article[k] || []}  # could return arrays or strings
           .flatten
         end
-		
+
         def get_authors(article)
           %w(AU AF CA)
           .map{|k| article[k] || []}  # could return arrays or strings
@@ -130,7 +130,7 @@ module RayyanFormats
           .map{|a| a.split(/#{::RefParsers::NEWLINE_MERGER}\s+/)}
           .flatten
         end
-	 
+
         def set_publication_type(publication_types)
           case publication_types
           when "Journal Article"
@@ -141,8 +141,8 @@ module RayyanFormats
           publication_types
           end
         end
-		
-		    def emit_line(key, value)
+
+        def emit_line(key, value)
          "#{key} #{value}\n" unless value.nil? || value.to_s.strip == ''
         end
       end # class methods
