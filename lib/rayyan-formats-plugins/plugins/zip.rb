@@ -20,7 +20,7 @@ module RayyanFormats
           ::Zip::File.open(tmpfile.path) do |zip_file|
             grand_total = 0
             zip_file.each do |entry|
-              logger "Extracting #{entry.name}"
+              logger.debug "Extracting #{entry.name}"
               next if entry.name.include?('__MACOS')
               begin
                 entry_total = nil
@@ -43,7 +43,7 @@ module RayyanFormats
             end
           end
           raise "Zip file has no supported entries. Entries must have one of the following extensions: #{self.import_extensions_str}" if valid_entries == 0
-          logger "Successfully extracted #{valid_entries} entry from zip file #{filename}"
+          logger.debug "Successfully extracted #{valid_entries} entry from zip file #{filename}"
         ensure
           tmpfile.close
         end
