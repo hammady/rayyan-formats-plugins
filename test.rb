@@ -5,7 +5,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'rayyan-formats-core'
 require 'rayyan-formats-plugins'
-require 'log4r'
+require 'logger'
 
 RayyanFormats::Base.plugins = [
   RayyanFormats::Plugins::Refman,
@@ -24,8 +24,8 @@ puts RayyanFormats::Base.send(:match_import_plugin, 'ciw')
 puts RayyanFormats::Base.import_extensions_str
 puts RayyanFormats::Base.export_extensions_str
 
-logger = Log4r::Logger.new('RayyanFormats')
-logger.outputters = Log4r::Outputter.stdout
+logger = Logger.new(STDOUT)
+logger.level = Logger::DEBUG
 RayyanFormats::Base.logger = logger
 
 puts "Exporting..."
@@ -41,7 +41,7 @@ plugin = RayyanFormats::Base.get_export_plugin('bib')
   s3/refman-example.ris.gz
   s3/zip-example.zip
 ).map{|filename| "../rayyan/nonrails/citation_examples/#{filename}"}.each do |filename|
-  RayyanFormats::Base.import(RayyanFormats::Source.new(filename)) { |target, total, is_new|
+  RayyanFormats::Base.import(RayyanFormats::Source.new(filename)) { |target, total|
     # post processing for target
     puts plugin.export(target)
   }
