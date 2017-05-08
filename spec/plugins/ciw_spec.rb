@@ -61,7 +61,6 @@ describe CIW do
     end
   end
 
-
   describe ".do_export" do
     let(:plugin) { CIW }
     let(:target) {
