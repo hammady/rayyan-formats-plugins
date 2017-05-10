@@ -65,7 +65,7 @@ module RayyanFormats
           emit_line("C", target.publisher_location),
           # TODO collection
           target.keywords ? target.keywords.map{|kw| emit_line("K", kw)} : nil,
-          options[:include_abstracts] && target.abstracts ? target.abstracts.map{|ab| emit_line("X", ab)} : nil,
+          get_abstracts(target, options){|abstracts| abstracts.map{|ab| emit_line("X", ab)}},
           emit_line("1", target.notes),
           "\n"
         ].flatten.join if target

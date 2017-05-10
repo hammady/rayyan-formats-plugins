@@ -62,7 +62,7 @@ module RayyanFormats
           emit_line("address", target.publisher_location),
           emit_line("series", target.collection),
           target.keywords ? emit_line("keywords", target.keywords.join(', ')) : nil,
-          options[:include_abstracts] && target.abstracts ? emit_line("abstract", target.abstracts.join("\n")) : nil,
+          get_abstracts(target, options){|abstracts| emit_line("abstract", abstracts.join("\n").strip)},
           emit_line("note", target.notes)
         ].compact.join(",\n") + "\n}\n\n" if target
       end

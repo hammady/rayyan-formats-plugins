@@ -61,7 +61,7 @@ module RayyanFormats
           emit_line("PD", "#{target.date_array[1]} #{target.date_array[2]}"),
           emit_line("PY", target.date_array[0]),
           emit_line("BP", target.pagination),
-          options[:include_abstracts] && target.abstracts ? target.abstracts.map.with_index{|author, i| emit_line("AB", target.abstracts[i])} : nil,
+          get_abstracts(target, options){|abstracts| abstracts.map{|abstract| emit_line("AB", abstract)}},
           emit_line("SN", target.journal_issn),
           emit_line("DT", target.Document_type),
           emit_line("PU", target.publisher_name),

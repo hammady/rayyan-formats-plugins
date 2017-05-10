@@ -27,11 +27,12 @@ To configure your client application to use some or all of the format plugins he
     RayyanFormats::Base.plugins = [
       RayyanFormats::Plugins::Refman,
       RayyanFormats::Plugins::EndNote,
-      RayyanFormats::Plugins::BibTeX,
-      RayyanFormats::Plugins::WordDocument,
-      RayyanFormats::Plugins::GZ,
-      RayyanFormats::Plugins::Zip
+      RayyanFormats::Plugins::BibTeX
     ]
+
+Or if you want all available plugins to be enabled:
+
+    RayyanFormats::Base.plugins = RayyanFormats::Base.available_plugins
 
 The rest is done exactly the same as what is explained in the core plugin.
 

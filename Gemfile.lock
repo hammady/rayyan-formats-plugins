@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rayyan-formats-plugins (0.1.2)
+    rayyan-formats-plugins (0.1.3)
       bibtex-ruby (~> 4.4)
       docx (~> 0.2.0)
       rayyan-formats-core (~> 0.1.0)
@@ -33,8 +33,8 @@ GEM
     nokogiri (1.7.1-x86-mingw32)
       mini_portile2 (~> 2.1.0)
     rake (0.9.6)
-    rayyan-formats-core (0.1.4)
-    ref_parsers (0.1.2)
+    rayyan-formats-core (0.1.5)
+    ref_parsers (0.1.3)
     rspec (3.5.0)
       rspec-core (~> 3.5.0)
       rspec-expectations (~> 3.5.0)
