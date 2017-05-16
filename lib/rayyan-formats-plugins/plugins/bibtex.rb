@@ -17,20 +17,19 @@ module RayyanFormats
       do_import do |body, filename, &block|
         b = ::BibTeX.parse(body)
         total = b.length
-        # TODO: FILTER ONLY @articles?
-        b['@article'].each do |article|
+        b.each do |article|
           target = Target.new
-          target.publication_types = ["Journal Article"] # :article
+          target.publication_types = get_pub_types(article)
           target.sid = to_s_or_nil article.key
-          target.title = article['title'].to_s
+          target.title = get_title(article)
           target.date_array = convert_date article['year'], article['month']
           target.journal_title = to_s_or_nil article['journal']
           target.journal_issn = to_s_or_nil article['issn']
           target.jvolume = article['volume'].to_i rescue 0
           target.jissue = article['number'].to_i rescue 0
           target.pagination = to_s_or_nil article['pages']
-          target.authors = article[:author].split(/\s*;\s*|\s*and\s*/) if article[:author]
-          target.affiliation = to_s_or_nil article['institution']
+          target.authors = get_authors(article)
+          target.affiliation = to_s_or_nil(article['institution']) || to_s_or_nil(article['school'])
           target.url = to_s_or_nil article['url']
           target.language = to_s_or_nil article['language']
           target.publisher_name = to_s_or_nil article['publisher']
@@ -93,6 +92,32 @@ module RayyanFormats
           else
             options[:unique_id]
           end
+        end
+
+        def get_pub_types(article)
+          [
+            case article.type
+            when :article
+              'Journal Article'
+            when :proceedings, :inproceedings
+              'Conference Article'
+            when :book, :booklet, :inbook, :incollection
+              'Book'
+            else
+              article.type.to_s
+            end
+          ]
+        end
+
+        def get_title(article)
+          title = article['title'].to_s
+          title = "#{title} - #{article['booktitle']}" if article['booktitle']
+          title
+        end
+
+        def get_authors(article)
+          value = article['author'] || article['editor']
+          value.split(/\s*;\s*|\s*and\s*/) if value
         end
 
       end # class methods

@@ -16,14 +16,15 @@ describe RayyanFormats::Plugins::BibTeX do
   describe ".do_import" do
     let(:filename) { 'spec/support/example1.bib' }
     let(:body) { File.read(filename) }
-    let(:expected_total) { 13 }
+    let(:expected_total) { 17 }
 
     it_behaves_like "repetitive target yielder"
 
     it "assigns correct values from first line" do
       line = 0
       plugin.send(:do_import, body, filename) do |target|
-        if line == 0
+        case line
+        when 0
           expect(target.publication_types).to eq(["Journal Article"])
           expect(target.sid).to eq("key1")
           expect(target.title).to eq("title1")
@@ -43,9 +44,20 @@ describe RayyanFormats::Plugins::BibTeX do
           expect(target.keywords).to eq(%w(kw1 kw2 kw3))
           expect(target.abstracts).to eq(["abstract1"])
           expect(target.notes).to eq("note1")
-        else
+        when 1..12
           # test month name to number conversion for the 12 months
           expect(target.date_array).to eq(["2017", line.to_s])
+        when 13
+          expect(target.publication_types).to eq(["Conference Article"])
+        when 14
+          expect(target.publication_types).to eq(["Book"])
+        when 15
+          expect(target.publication_types).to eq(["Book"])
+          expect(target.title).to eq("title - book_title")
+          expect(target.authors).to eq(["editor"])
+        when 16
+          expect(target.publication_types).to eq(["phdthesis"])
+          expect(target.affiliation).to eq("school")
         end
         line += 1
       end
