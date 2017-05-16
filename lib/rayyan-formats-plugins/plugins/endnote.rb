@@ -47,7 +47,7 @@ module RayyanFormats
 
       do_export do |target, options|
         [
-          emit_line("0", target.publication_types.first),
+          emit_line("0", target.publication_types && target.publication_types.first ? target.publication_types.first : 'Journal Article'),
           emit_line("M", target.sid),
           emit_line("T", target.title),
           target.date_array ? emit_line("D", target.date_array.first) : nil,

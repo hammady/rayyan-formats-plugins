@@ -53,7 +53,7 @@ module RayyanFormats
         [
           emit_line("FN","Thomson Reuters Web of Science"),
           emit_line("VR", "1.0"),
-          emit_line("PT", target.publication_types ? set_publication_type(target.publication_types.first) : 'J'),
+          emit_line("PT", target.publication_types && target.publication_types.first ? set_publication_type(target.publication_types.first) : 'J'),
           emit_line("AU", target.authors.first),
           target.authors ? target.authors.map.with_index{|author, i| emit_line("  ", target.authors[i+1])} : nil,
           emit_line("TI", target.title),

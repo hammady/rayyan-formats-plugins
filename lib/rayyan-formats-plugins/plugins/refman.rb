@@ -51,7 +51,7 @@ module RayyanFormats
 
       do_export do |target, options|
         [
-          emit_line("TY", target.publication_types ? set_publication_type(target.publication_types.first) : 'JOUR'),
+          emit_line("TY", target.publication_types && target.publication_types.first ? set_publication_type(target.publication_types.first) : 'JOUR'),
           emit_line("AN", target.sid),
           emit_line("TI", target.title),
           target.date_array ? target.date_array.map.with_index{|y, i| emit_line("Y#{i+1}", y)} : nil,
