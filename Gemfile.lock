@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rayyan-formats-plugins (0.1.4)
+    rayyan-formats-plugins (0.1.5)
       bibtex-ruby (~> 4.4)
       docx (~> 0.2.0)
       rayyan-formats-core (~> 0.1.0)
