@@ -27,9 +27,11 @@ GEM
     json (2.1.0)
     latex-decode (0.2.2)
       unicode (~> 0.4)
-    mini_portile2 (2.1.0)
-    nokogiri (1.7.1)
-      mini_portile2 (~> 2.1.0)
+    mini_portile2 (2.4.0)
+    nokogiri (1.10.8)
+      mini_portile2 (~> 2.4.0)
+    nokogiri (1.10.8-x86-mingw32)
+      mini_portile2 (~> 2.4.0)
     rake (0.9.6)
     rayyan-formats-core (0.1.5)
     ref_parsers (0.2.0)
@@ -57,6 +59,7 @@ GEM
     thor (0.19.4)
     tins (1.13.2)
     unicode (0.4.4.4)
+    unicode (0.4.4.4-x86-mingw32)
 
 PLATFORMS
   ruby
