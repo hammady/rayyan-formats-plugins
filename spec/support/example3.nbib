@@ -1,0 +1,28 @@
+PMID- 123456
+PT  - Journal Article
+PT  - Review
+TI  - A title for a research article
+DP  - 2020 May 20
+JT  - A journal title
+IS  - A journal issn
+TA  - A journal abbreviation
+VI  - 1
+IP  - 10
+PG  - pagination1
+AU  - a1_last_name a1_first_name
+AU  - a2_last_name a2_first_name
+AD  - University1
+AD  - University2
+LA  - eng
+LA  - ger
+PL  - publisher location
+CTI - collection1
+MH  - kw1
+MH  - kw2
+MH  - kw3
+MH  - kw4
+AB  - This is abstract 1
+AB  - This is abstract 2
+GN  - This is note1
+GN  - This is note2
+
