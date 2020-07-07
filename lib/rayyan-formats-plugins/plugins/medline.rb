@@ -48,7 +48,7 @@ module RayyanFormats
 
       do_export do |target, options|
         [
-          emit_line('PMID', target.sid),
+          "PMID- #{target.sid}\n",
           emit_lines_from_array('PT', target.publication_types),
           emit_line('TI', target.title),
           emit_line('DP', format_date_array(target.date_array)),
