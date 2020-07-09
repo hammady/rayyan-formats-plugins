@@ -37,7 +37,7 @@ describe MEDLINE do
           expect(target.jissue).to eq(2)
           expect(target.pagination).to eq('55-64')
           expect(target.authors).to eq(['Wörmann B'])
-          expect(target.affiliation).to eq(['Medizinische Klinik mit Schwerpunkt Hämatologie'])
+          expect(target.affiliation).to eq('Medizinische Klinik mit Schwerpunkt Hämatologie')
           expect(target.url).to eq('https://pubmed.ncbi.nlm.nih.gov/29952495/')
           expect(target.language).to eq(%w[eng ger])
           expect(target.publisher_location).to eq('Germany')
@@ -78,6 +78,7 @@ describe MEDLINE do
               { idtype: :pii, value: '88/4/401M [pii]' }
             ]
           )
+          expect(target.copyright).to eq('©2017 American Society of Radiologic Technologists.')
         when 2
           expect(target.publication_types).to eq(['Introductory Journal Article'])
           expect(target.sid).to eq('20521754')
@@ -91,8 +92,8 @@ describe MEDLINE do
           expect(target.pagination).to eq('1339-46')
           expect(target.authors).to eq(['Maughan KL', 'Lutterbie MA', 'Ham PS'])
           expect(target.affiliation).to eq(
-            ['Department of Family Medicine, University of Virginia School of Medicine, ' +
-            'Charlottesville, VA 22908, USA. kmaughan@virginia.edu']
+            'Department of Family Medicine, University of Virginia School of Medicine, ' +
+            'Charlottesville, VA 22908, USA. kmaughan@virginia.edu'
           )
           expect(target.url).to eq('https://pubmed.ncbi.nlm.nih.gov/20521754/')
           expect(target.language).to eq('eng')
@@ -134,15 +135,13 @@ describe MEDLINE do
             ['Kolak A', 'Kamińska M', 'Sygit K', 'Budny A', 'Surdyka D', 'Kukiełka-Budny B', 'Burdan F']
           )
           expect(target.affiliation).to eq(
-            [
-              "St. John's Cancer Center, Department of Radiotherapy, Lublin, Poland. agkola@interia.pl.",
-              "St. John's Cancer Center, Department of Oncology, Lublin, Poland.",
-              'University of Szczecin, Faculty of Physical Education and Health Promotion, Szczecin, Poland.',
-              "St. John's Cancer Center, Department of Radiotherapy, Lublin, Poland.",
-              "St. John's Cancer Center, Department of Radiotherapy, Lublin, Poland.",
-              "St. John's Cancer Center, Department of Oncology, Lublin, Poland.",
-              'Human Anatomy Department, Medical Univeristy of Lublin, Poland.'
-            ]
+            "St. John's Cancer Center, Department of Radiotherapy, Lublin, Poland. agkola@interia.pl.; " +
+            "St. John's Cancer Center, Department of Oncology, Lublin, Poland.; " +
+            "University of Szczecin, Faculty of Physical Education and Health Promotion, Szczecin, Poland.; " +
+            "St. John's Cancer Center, Department of Radiotherapy, Lublin, Poland.; " +
+            "St. John's Cancer Center, Department of Radiotherapy, Lublin, Poland.; " +
+            "St. John's Cancer Center, Department of Oncology, Lublin, Poland.; " +
+            "Human Anatomy Department, Medical Univeristy of Lublin, Poland."
           )
           expect(target.article_ids).to eq(
             [
@@ -157,7 +156,7 @@ describe MEDLINE do
           expect(target.date_array).to eq(%w[2011 11])
           expect(target.authors).to eq(['DeSantis C', 'Siegel R', 'Bandi P', 'Jemal A'])
           expect(target.affiliation).to eq(
-            ['Epidemiologist, Surveillance Research, American Cancer Society, Atlanta, GA 30303, USA. carol.desantis@cancer.org']
+            'Epidemiologist, Surveillance Research, American Cancer Society, Atlanta, GA 30303, USA. carol.desantis@cancer.org'
           )
           expect(target.article_ids).to eq(
             [

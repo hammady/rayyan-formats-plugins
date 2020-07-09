@@ -31,7 +31,7 @@ module RayyanFormats
           target.jissue = article['IP']&.to_i
           target.pagination = article['PG']
           target.authors = Array(article['AU'])
-          target.affiliation = get_multivalued_field_with_newline_merger article['AD']
+          target.affiliation = get_multivalued_field_with_newline_merger(article['AD']).join('; ') if article['AD']
           # Generates url from pmid stored in article['type']
           target.url = get_pubmed_url article['type']
           target.language = article['LA']
@@ -41,6 +41,7 @@ module RayyanFormats
           target.abstracts = get_multivalued_field_with_newline_merger article['AB']
           target.notes = article['GN']
           target.article_ids = get_article_ids article
+          target.copyright = article['CI']
 
           block.call(target, total)
         end
@@ -141,11 +142,12 @@ module RayyanFormats
         end
 
         def get_multivalued_field_with_newline_merger(values)
-          return unless values
+          return [] unless values
 
           # If single-valued string field, convert to array
           values_to_get = Array(values)
 
+          # Get rid of extra spaces created by newline merger
           values_to_get.map! do |value|
             value.gsub(/\s+/, ' ')
           end
