@@ -41,6 +41,7 @@ module RayyanFormats
           target.abstracts = get_multivalued_field_with_newline_merger article['AB']
           target.notes = article['GN']
           target.article_ids = get_article_ids article
+          target.copyright = article['CI']
 
           block.call(target, total)
         end

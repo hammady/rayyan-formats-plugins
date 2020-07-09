@@ -78,6 +78,7 @@ describe MEDLINE do
               { idtype: :pii, value: '88/4/401M [pii]' }
             ]
           )
+          expect(target.copyright).to eq('©2017 American Society of Radiologic Technologists.')
         when 2
           expect(target.publication_types).to eq(['Introductory Journal Article'])
           expect(target.sid).to eq('20521754')
