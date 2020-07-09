@@ -135,7 +135,13 @@ describe MEDLINE do
             ['Kolak A', 'Kamińska M', 'Sygit K', 'Budny A', 'Surdyka D', 'Kukiełka-Budny B', 'Burdan F']
           )
           expect(target.affiliation).to eq(
-              "St. John's Cancer Center, Department of Radiotherapy, Lublin, Poland. agkola@interia.pl."
+            "St. John's Cancer Center, Department of Radiotherapy, Lublin, Poland. agkola@interia.pl.; " +
+            "St. John's Cancer Center, Department of Oncology, Lublin, Poland.; " +
+            "University of Szczecin, Faculty of Physical Education and Health Promotion, Szczecin, Poland.; " +
+            "St. John's Cancer Center, Department of Radiotherapy, Lublin, Poland.; " +
+            "St. John's Cancer Center, Department of Radiotherapy, Lublin, Poland.; " +
+            "St. John's Cancer Center, Department of Oncology, Lublin, Poland.; " +
+            "Human Anatomy Department, Medical Univeristy of Lublin, Poland."
           )
           expect(target.article_ids).to eq(
             [
