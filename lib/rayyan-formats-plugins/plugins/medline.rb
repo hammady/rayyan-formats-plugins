@@ -31,7 +31,7 @@ module RayyanFormats
           target.jissue = article['IP']&.to_i
           target.pagination = article['PG']
           target.authors = Array(article['AU'])
-          target.affiliation = get_multivalued_field_with_newline_merger article['AD']
+          target.affiliation = get_multivalued_field_with_newline_merger(article['AD']).first
           # Generates url from pmid stored in article['type']
           target.url = get_pubmed_url article['type']
           target.language = article['LA']
