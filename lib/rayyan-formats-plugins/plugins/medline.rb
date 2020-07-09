@@ -141,11 +141,12 @@ module RayyanFormats
         end
 
         def get_multivalued_field_with_newline_merger(values)
-          return unless values
+          return [] unless values
 
           # If single-valued string field, convert to array
           values_to_get = Array(values)
 
+          # Get rid of extra spaces created by newline merger
           values_to_get.map! do |value|
             value.gsub(/\s+/, ' ')
           end
