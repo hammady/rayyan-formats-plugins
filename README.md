@@ -36,18 +36,41 @@ Or if you want all available plugins to be enabled:
 
 The rest is done exactly the same as what is explained in the core plugin.
 
-## Testing
+## Development and Testing
 
-    rspec
+To build for local development and testing (requires Docker):
 
-Or
+```bash
+docker build . -t rayyan-formats-plugins:1
+```
 
-    rake
+To run the tests:
+
+```bash
+docker run -it --rm -v $PWD:/home rayyan-formats-plugins:1
+```
+
+This will allow you to edit files and re-run the tests without rebuilding
+the image.
+
+## Publishing the gem
+
+```bash
+docker build . -t rayyan-formats-plugins:1
+docker run -it --rm rayyan-formats-plugins:1 /home/publish.sh
+```
+
+Enter your email and password when prompted. If you want to skip interactive
+login, supply `RUBYGEMS_API_KEY` as an additional argument:
+
+```bash
+docker run -it --rm -e RUBYGEMS_API_KEY=YOUR_RUBYGEMS_API_KEY rayyan-formats-plugins:1 /home/publish.sh
+```
 
 ## Adding more formats
 
 Support for more formats can be done by subclassing `RayyanFormats::Base` and defining attributes and logic using simple DSL. The `detect` block is optional
-and if omitted will mark the plugin as non-core. This means that it won't go 
+and if omitted will mark the plugin as non-core. This means that it won't go
 through the detection pipeline and the `do_import` block will be executed
 directly if the extension matches.
 Core plugins, on the other hand, pass through the detection pipeline
