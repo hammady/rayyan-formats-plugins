@@ -5,7 +5,7 @@ require 'bibtex'
 module RayyanFormats
   module Plugins
     class BibTeX < RayyanFormats::Base
-      
+
       title 'BibTeX'
       extension 'bib'
       description 'Supports entries of type article, full documentation here: http://en.wikipedia.org/wiki/BibTeX'
@@ -40,7 +40,7 @@ module RayyanFormats
           target.notes = to_s_or_nil article['note']
 
           block.call(target, total)
-        end  
+        end
       end
 
       do_export do |target, options|

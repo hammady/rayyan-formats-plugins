@@ -3,7 +3,7 @@ require 'ref_parsers'
 module RayyanFormats
   module Plugins
     class CIW < RayyanFormats::Base
-      
+
       title 'CIW'
       extension 'ciw'
       description "The ISI/Web of Science data exchange format is used by Thomson's Web of Science export function. The informal definition is taken from the Ruby Forge web site instead."
@@ -21,7 +21,7 @@ module RayyanFormats
           target = Target.new
           target.sid = article['UT']
           target.title = article['TI']
-          target.date_array = get_date_array article	  
+          target.date_array = get_date_array article
           target.jvolume = article['VL'].to_i rescue 0
           target.pagination = "#{article['BP']}#{article['EP'] ? '-' + article['EP'] : ''}"
           target.authors = get_authors article
@@ -73,8 +73,8 @@ module RayyanFormats
           emit_line("ID", "#{target.keywords.first};"),
           target.keywords ? target.keywords.map.with_index { |id, i| i+1 == target.keywords.length ? nil : emit_line("  ","#{target.keywords[i+1]};")} : nil,
           emit_line("LA", target.language),
-          emit_line("UT", target.sid),  
-          "ER\n\nEF"	
+          emit_line("UT", target.sid),
+          "ER\n\nEF"
         ].flatten.join if target
       end
 
@@ -105,7 +105,7 @@ module RayyanFormats
         def set_convert_date(month)
           month = MONTHS.index(month) unless month.nil?
         end
-      
+
         def get_keywords(keywords)
           [keywords || []]
           .flatten
