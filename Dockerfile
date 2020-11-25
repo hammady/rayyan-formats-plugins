@@ -1,4 +1,5 @@
-FROM ruby:2.3.8-jessie
+ARG tag=2.3.8-jessie
+FROM ruby:$tag
 
 LABEL maintainer="Hossam Hammady <github@hammady.net>"
 
