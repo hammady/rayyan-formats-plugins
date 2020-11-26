@@ -3,7 +3,7 @@ require 'ref_parsers'
 module RayyanFormats
   module Plugins
     class EndNote < RayyanFormats::Base
-      
+
       title 'EndNote'
       extension 'enw'
       description 'Supports entries of type Journal Article, full documentation here: http://www.harzing.com/pophelp/exporting.htm#endnote and here: http://wiki.cns.iu.edu/pages/viewpage.action?pageId=1933370'
@@ -70,7 +70,7 @@ module RayyanFormats
           "\n"
         ].flatten.join if target
       end
-      
+
       class << self
         def get_date_array(article)
           date_line = article['8'] || article['D']

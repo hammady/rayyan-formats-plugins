@@ -38,10 +38,24 @@ describe RayyanFormats::Plugins::Zip do
           allow(RayyanFormats::Plugins::Zip).to receive(:match_import_plugin).with('csv') { csv_plugin }
         }
 
-        it "decompresses the file and handles supported entries" do
-          expect(text_plugin).to receive(:do_import).with("text content\n", "dummy.txt")
-          expect(csv_plugin).to receive(:do_import).with("csv content\n", "dummy.csv")
-          RayyanFormats::Plugins::Zip.send(:do_import, body, filename)
+        context "if there is no converter given" do
+          let(:converter) { nil }
+
+          it "decompresses the file and handles supported entries" do
+            expect(text_plugin).to receive(:do_import).with("text content\n", "dummy.txt", converter)
+            expect(csv_plugin).to receive(:do_import).with("csv content\n", "dummy.csv", converter)
+            RayyanFormats::Plugins::Zip.send(:do_import, body, filename, converter)
+          end
+        end
+
+        context "if a converter is given" do
+          let(:converter) { ->(body, ext) { "converted #{body}.#{ext}" } }
+
+          it "converts then decompresses the file and handles supported entries" do
+            expect(text_plugin).to receive(:do_import).with("converted text content\n.txt", "dummy.txt", converter)
+            expect(csv_plugin).to receive(:do_import).with("converted csv content\n.csv", "dummy.csv", converter)
+            RayyanFormats::Plugins::Zip.send(:do_import, body, filename, converter)
+          end
         end
 
         it "incrementally computes total articles from each entry" do

@@ -3,12 +3,12 @@ require 'zip'
 module RayyanFormats
   module Plugins
     class Zip < RayyanFormats::Base
-      
+
       title 'ZIP'
       extension 'zip'
       description 'Supports compressed zip archives containing multiple files in any of the other formats, or recursively zip archives.'
 
-      do_import do |body, filename, &block|
+      do_import do |body, filename, converter, &block|
         # Need to write file to Disk as RubyZip Input Stream doesnt read more than
         # a single entry from Zips Created by Mac
         begin
@@ -27,7 +27,9 @@ module RayyanFormats
                 ext = File.extname(entry.name).delete('.')
                 ext = 'txt' if ext.length == 0
                 plugin = self.match_import_plugin(ext)
-                plugin.send(:do_import, entry.get_input_stream.read, entry.name) do |*arguments|
+                body = entry.get_input_stream.read
+                body = converter.call(body, ext) if converter
+                plugin.send(:do_import, body, entry.name, converter) do |*arguments|
                   if entry_total.nil?
                     # first yielded article in entry
                     entry_total = arguments[1]
@@ -55,9 +57,9 @@ module RayyanFormats
         #     plugin = self.match_import_plugin(ext) rescue next
         #     plugin.parse(io.read, entry.name, &block)
         #   end
-        # end  
+        # end
       end
-      
+
     end # class
   end # module
 end # module
