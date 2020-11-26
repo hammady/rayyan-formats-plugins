@@ -13,12 +13,12 @@ module RayyanFormats
         ext = File.extname(filename).delete('.')
         ext = 'txt' if ext.length == 0
         plugin = self.match_import_plugin(ext)
-        fileContent = StringIO.new(body)
-        gzipped = Zlib::GzipReader.new(fileContent)
-        fileContent = StringIO.new(gzipped.read).string
+        file_content = StringIO.new(body)
+        gzipped = Zlib::GzipReader.new(file_content)
+        file_content = StringIO.new(gzipped.read).string
         gzipped.close
-        fileContent = converter.call(fileContent, ext) if converter
-        plugin.do_import(fileContent, filename, converter, &block)
+        file_content = converter.call(file_content, ext) if converter
+        plugin.do_import(file_content, filename, converter, &block)
       end
 
     end # class
