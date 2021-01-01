@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     rayyan-formats-plugins (0.3.1)
-      bibtex-ruby (~> 4.4)
+      bibtex-ruby (>= 4.4, < 6.0)
       docx (~> 0.2.0)
       rayyan-formats-core (~> 0.3)
       ref_parsers (~> 0.2.0)
@@ -10,7 +10,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    bibtex-ruby (4.4.7)
+    bibtex-ruby (5.1.6)
       latex-decode (~> 0.0)
     coderay (1.1.2)
     coveralls (0.8.23)
@@ -28,6 +28,8 @@ GEM
     latex-decode (0.3.2)
     mini_portile2 (2.4.0)
     nokogiri (1.10.10)
+      mini_portile2 (~> 2.4.0)
+    nokogiri (1.10.10-x86-mingw32)
       mini_portile2 (~> 2.4.0)
     rake (0.9.6)
     rayyan-formats-core (0.3.1)
