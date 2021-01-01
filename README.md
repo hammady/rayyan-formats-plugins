@@ -1,9 +1,9 @@
-[![Build Status](https://travis-ci.org/rayyanqcri/rayyan-formats-plugins.svg?branch=master)](https://travis-ci.org/rayyanqcri/rayyan-formats-plugins)
-[![Coverage Status](https://coveralls.io/repos/github/rayyanqcri/rayyan-formats-plugins/badge.svg?branch=master)](https://coveralls.io/github/rayyanqcri/rayyan-formats-plugins?branch=master)
+[![Build Status](https://travis-ci.org/rayyansys/rayyan-formats-plugins.svg?branch=master)](https://travis-ci.org/rayyansys/rayyan-formats-plugins)
+[![Coverage Status](https://coveralls.io/repos/github/rayyansys/rayyan-formats-plugins/badge.svg?branch=master)](https://coveralls.io/github/rayyansys/rayyan-formats-plugins?branch=master)
 
 # RayyanFormats Plugins
 
-Plugins for RayyanFormats. For details, please check the core plugin [rayyan-formats-core](https://github.com/rayyanqcri/rayyan-formats-core).
+Plugins for RayyanFormats. For details, please check the core plugin [rayyan-formats-core](https://github.com/rayyansys/rayyan-formats-core).
 
 ## Installation
 
